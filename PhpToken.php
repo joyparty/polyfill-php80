@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Polyfill\Php80;
+namespace JoyParty\Polyfill\Php80;
 
 /**
  * @author Fedonyuk Anton <info@ensostudio.ru>
@@ -46,7 +46,10 @@ class PhpToken implements \Stringable
         $this->pos = $position;
     }
 
-    public function getTokenName(): ?string
+    /**
+     * @return string|null
+     */
+    public function getTokenName()
     {
         if ('UNKNOWN' === $name = token_name($this->id)) {
             $name = \strlen($this->text) > 1 || \ord($this->text) < 32 ? null : $this->text;
@@ -92,7 +95,7 @@ class PhpToken implements \Stringable
                 $id = \ord($token);
                 $text = $token;
             } else {
-                [$id, $text, $line] = $token;
+                list($id, $text, $line) = $token;
             }
             $tokens[$index] = new static($id, $text, $line, $position);
             $position += \strlen($text);
